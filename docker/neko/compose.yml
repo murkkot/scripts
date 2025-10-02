@@ -1,0 +1,20 @@
+services:
+  neko:
+    image: "ghcr.io/m1k1o/neko/brave:latest"
+    container_name: "neko"
+    restart: "unless-stopped"
+    shm_size: "2gb"
+    cap_add:
+      - SYS_ADMIN
+    ports:
+      - "8084:8080"
+      - "52000-52100:52000-52100/udp"
+    volumes:
+      - /mnt/ssdpci/docker/neko/data:/home/neko/.config/brave # persist chromium settings
+    environment:
+      NEKO_DESKTOP_SCREEN: '1920x1080@30'
+      NEKO_MEMBER_MULTIUSER_USER_PASSWORD: ${NEKO_MEMBER_MULTIUSER_USER_PASSWORD}
+      NEKO_MEMBER_MULTIUSER_ADMIN_PASSWORD: ${NEKO_MEMBER_MULTIUSER_ADMIN_PASSWORD}
+      NEKO_WEBRTC_EPR: 52000-52100
+      NEKO_WEBRTC_ICELITE: 1
+      NEKO_WEBRTC_NAT1TO1: ${NEKO_WEBRTC_NAT1TO1}
