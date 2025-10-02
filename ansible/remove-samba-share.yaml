@@ -1,0 +1,22 @@
+---
+- name: Remove samba share
+  hosts: homeserver
+  become: yes
+
+  vars:
+    share_name: various
+
+  tasks:
+    - name: Remove marked block
+      ansible.builtin.blockinfile:
+        path: /etc/samba/smb.conf
+        marker: "# {mark} ANSIBLE {{ share_name | upper }} SHARE"
+        state: absent
+        backup: yes
+      notify: Restart smbd
+
+  handlers:
+    - name: Restart smbd
+      ansible.builtin.service:
+        name: smbd
+        state: restarted
