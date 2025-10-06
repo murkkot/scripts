@@ -6,8 +6,8 @@
 input_dir="$1"
 files_per_folder="$2"
 
-if [ $# -lt 2 ]; then
-  echo "Usage: $0 input_dir number_of_files_per_folder"
+if [ $# -ne 2 ]; then
+  echo "Usage: $0 INPUT_DIR NUMBER_OF_FILES_PER_FOLDER"
   exit 1
 fi
 
@@ -17,7 +17,7 @@ if [ ! -d "$input_dir" ]; then
 fi
 
 if [[ ! "$files_per_folder" =~ ^[0-9]+$ ]]; then
-    echo "Files per folder number $files_per_folder must be positive integer"
+    echo "Files per folder number must be positive integer"
     exit 1
 fi
 
