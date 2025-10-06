@@ -16,7 +16,7 @@ if [ ! -d "$input_dir" ]; then
     exit 1
 fi
 
-if [[ "$files_per_folder" =~ ^[0-9]+$ ]]; then
+if [[ ! "$files_per_folder" =~ ^[0-9]+$ ]]; then
     echo "Files per folder number $files_per_folder must be positive integer"
     exit 1
 fi
