@@ -25,7 +25,7 @@ folder_num=1
 file_num=0
 
 folder_name=$(printf "%02d" "$folder_num")
-mkdir -p "$folder_name"
+mkdir -p "$input_dir/$folder_name"
 
 for file in "$1"/*.{jpeg,jpg,png,tiff}; do
     if [ -f "$file" ]; then
@@ -34,7 +34,7 @@ for file in "$1"/*.{jpeg,jpg,png,tiff}; do
         if (( file_num % files_per_folder == 0 )); then
             ((folder_num++))
             folder_name=$(printf "%02d" "$folder_num")
-            mkdir -p $folder_name
+            mkdir -p "$input_dir/$folder_name"
         fi     
     fi
 done
