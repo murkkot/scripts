@@ -21,6 +21,8 @@ if [[ ! "$files_per_folder" =~ ^[0-9]+$ ]]; then
     exit 1
 fi
 
+cd $input_dir
+
 folder_num=1
 file_num=0
 
