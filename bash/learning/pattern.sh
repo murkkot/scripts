@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "[INPUT]Enter  the value of N[INPUT]"
+echo "[INPUT]Enter the value of N[INPUT]"
 read user_input
 
 counter=1
