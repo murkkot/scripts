@@ -4,6 +4,8 @@
 current_date=$(date +"%Y-%m-%d %H:%M:%S")
 # backup path
 backup_path="$1"
+# number of archives
+archives_num=3
 
 printf '%s Backup job started\n' "$current_date"
 
@@ -26,4 +28,13 @@ if [ $exit_code -ne 0 ]; then
     exit $exit_code
 else
     printf 'Backup successful\n'
+fi
+
+# count number of *.zip file in backup dir
+current_archive_num=$(ls "$backup_path"/*backup.tar.xz 2>/dev/null | wc -l)
+
+if [ $current_archive_num -ge $archives_num ]; then
+    oldest_archive=$(ls $backup_dir/*backup.tar.xz | head -n 1)
+    rm $oldest_archive
+    echo "Removed file $oldest_archive"
 fi
