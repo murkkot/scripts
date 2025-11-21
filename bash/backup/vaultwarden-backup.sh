@@ -22,11 +22,11 @@ if [ ! -d "$backup_path" ]; then
 fi
 
 printf 'Stopping docker container\n'
-docker stop vaultwarden 
+docker stop vaultwarden > /dev/null
 printf 'Creating archive %s\n' "$backup_path/$archive_name"
-tar -czf "$backup_path"/"$archive_name" -C /mnt/ssdpci/docker/vaultwarden data
+tar -czf "$backup_path"/"$archive_name" -C /mnt/hdd/docker/vaultwarden data
 printf 'Starting docker container\n'
-docker start vaultwarden
+docker start vaultwarden > /dev/null
 
 # check exit status
 exit_code=$?
