@@ -1,0 +1,8 @@
+- name: "Add share to smb.conf"
+  ansible.builtin.blockinfile:
+    path: /etc/samba/smb.conf
+    marker: "# {mark} ANSIBLE {{ share_name | upper }} SHARE"
+    block: "{{ share_block }}"
+    insertafter: EOF
+    backup: yes
+  notify: Restart smbd

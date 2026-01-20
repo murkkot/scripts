@@ -1,5 +1,6 @@
 .env
 .swp
+.smbcredentials
 
 # ansible
 inventory.ini

@@ -1,0 +1,3 @@
+- name: Mount all fstab entries
+  ansible.builtin.command: mount -a
+  listen: "Mount all fstab entries"

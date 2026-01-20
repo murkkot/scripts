@@ -1,0 +1,29 @@
+---
+- name: Deploy ubuntu server
+  hosts: homeserver
+  become: true
+  vars:
+    server_user: "nas"
+    nas_ip: "192.168.1.152"
+    mount_dirs:
+      - archive
+      - backup
+      - cloud
+      - library
+      - media
+      - photos
+      - scripts
+      - various
+      - work
+  vars_prompt:
+  - name: samba_user_password
+    prompt: "Enter Samba password for {{ server_user }} user"
+    private: true 
+  roles:
+    - update-upgrade
+    - deploy-qemu-agent
+    - deploy-docker
+    - deploy-samba
+    - add-samba-share
+    - deploy-wsdd2
+    - mount-smb-shares

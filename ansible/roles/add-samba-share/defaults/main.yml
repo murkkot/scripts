@@ -1,0 +1,10 @@
+server_user: "{{ ansible_user }}"
+share_name: "home"
+share_path: "/home/{{ server_user }}"
+share_block: |
+  [{{ share_name }}]
+  comment = home
+  path = {{ share_path }}
+  writable = yes
+  browsable = yes
+  create mask = 0775

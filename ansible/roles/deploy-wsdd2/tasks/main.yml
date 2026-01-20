@@ -1,0 +1,12 @@
+- name: Install Web Services Dynamic Discovery
+  ansible.builtin.apt:
+    name:
+      - wsdd2
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+- name: Ensure WSDD2 service is enabled and started
+  ansible.builtin.service:
+    name: wsdd2
+    state: started
+    enabled: true

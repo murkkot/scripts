@@ -1,0 +1,51 @@
+---
+- name: Add SMB shares
+  hosts: oldserver
+  become: true
+  vars:
+    server_user: "nas"
+    nas_ip: "192.168.1.152"
+    mount_dirs:
+      - archive
+      - backup
+      - cloud
+      - library
+      - media
+      - photos
+      - scripts
+      - various
+      - work
+  tasks:
+    - name: Install cifs-utils
+      ansible.builtin.apt:
+        name:
+          - cifs-utils
+        state: present
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Copy SMB credentials
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/roles/mount-smb-shares/files/.smbcredentials"
+        dest: "/home/{{ server_user }}/.smbcredentials"
+        owner: "{{ server_user }}"
+        group: "{{ server_user }}"
+        mode: '0600'
+
+    - name: Create SMB mount directories
+      ansible.builtin.file:
+        path: "/mnt/newserver/{{ item }}"
+        state: directory
+        owner: "{{ server_user }}"
+        group: "{{ server_user }}"
+        mode: '0755'
+      loop: "{{ mount_dirs }}"
+
+    - name: Mount CIFS share (no fstab persistence)
+      ansible.posix.mount:
+        path: /mnt/newserver/{{ item }}
+        src: "//{{ nas_ip }}/{{ item }}"
+        fstype: cifs
+        opts: "credentials=/home/{{ server_user }}/.smbcredentials,vers=3.0,uid=1000,gid=1000"
+        state: ephemeral
+      loop: "{{ mount_dirs }}"
