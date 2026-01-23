@@ -4,7 +4,7 @@
   become: true
   vars:
     server_user: "nas"
-    nas_ip: "192.168.1.152"
+    nas_ip: "192.168.1.151"
     mount_dirs:
       - archive
       - backup
@@ -20,10 +20,10 @@
     prompt: "Enter Samba password for {{ server_user }} user"
     private: true 
   roles:
-    - update-upgrade
-    - deploy-qemu-agent
-    - deploy-docker
-    - deploy-samba
-    - add-samba-share
-    - deploy-wsdd2
-    - mount-smb-shares
+    - update_upgrade
+    - deploy_qemu_agent
+    - deploy_docker
+    - deploy_samba
+    - add_samba_share
+    - deploy_wsdd2
+    - mount_smb_shares

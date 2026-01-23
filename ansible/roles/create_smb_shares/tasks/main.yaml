@@ -1,0 +1,15 @@
+- name: Ensure share directories exist
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+  loop: "{{ samba_shares }}"
+
+- name: Install smb.conf
+  ansible.builtin.template:
+    src: smb.conf.j2
+    dest: "{{ samba_config_path }}"
+    owner: root
+    group: root
+    mode: "0644"
+    backup: true
+  notify: Restart samba

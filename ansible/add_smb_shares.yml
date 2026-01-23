@@ -4,7 +4,7 @@
   become: true
   vars:
     server_user: "nas"
-    nas_ip: "192.168.1.152"
+    nas_ip: "192.168.1.151"
     mount_dirs:
       - archive
       - backup
@@ -26,7 +26,7 @@
 
     - name: Copy SMB credentials
       ansible.builtin.copy:
-        src: "{{ playbook_dir }}/roles/mount-smb-shares/files/.smbcredentials"
+        src: "{{ playbook_dir }}/roles/mount_smb_shares/files/.smbcredentials"
         dest: "/home/{{ server_user }}/.smbcredentials"
         owner: "{{ server_user }}"
         group: "{{ server_user }}"

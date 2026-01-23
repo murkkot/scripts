@@ -1,0 +1,13 @@
+- name: Ensure groups exist
+  ansible.builtin.group:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ groups_to_create }}"
+
+- name: Ensure users are members of common groups
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    groups: "{{ groups_to_create }}"
+    state: present
+    append: true
+  loop: "{{ users_to_create }}"

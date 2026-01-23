@@ -1,0 +1,37 @@
+- name: Check if target dirs exist
+  ansible.builtin.stat:
+    path: "{{ item }}"
+  register: dir_stats
+  loop: "{{ dirs }}"
+
+- name: Set directory ownership if exists
+  ansible.builtin.file:
+    path: "{{ item.stat.path }}"
+    state: directory
+    owner: "{{ dir_owner }}"
+    group: "{{ dir_group }}"
+    recurse: true
+  loop: "{{ dir_stats.results }}"
+  when:
+    - item.stat.exists
+    - item.stat.isdir | default(false)
+
+- name: Find all directories under path
+  ansible.builtin.find:
+    paths: "{{ item.stat.path }}"
+    file_type: directory
+  register: found_dirs
+  loop: "{{ dir_stats.results }}"
+  when:
+    - dirs_setgid_enabled | bool
+    - item.stat.exists
+    - item.stat.isdir | default(false)
+
+- name: Set setgid bit on all directories
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    mode: "g+s"
+  loop: "{{ found_dirs.results | map(attribute='files') | flatten }}"
+  when:
+    - dirs_setgid_enabled | bool
+    - found_dirs is defined

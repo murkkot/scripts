@@ -1,0 +1,11 @@
+version: '3'
+services:
+  freefilesync:
+    image: jlesage/freefilesync
+    ports:
+      - "5800:5800"
+    volumes:
+      - "/mnt/ssdpci/docker/freefilesync/config:/config:rw"
+      - "/mnt/ssdpci/photos:/storage/source:ro"
+      - "/mnt/extdrive:/storage/destination:rw"
+    restart: unless-stopped

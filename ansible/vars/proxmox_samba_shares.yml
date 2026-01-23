@@ -1,0 +1,37 @@
+samba_shares:
+  - name: archive
+    path: /storage/archive
+    valid_users: ['nas', 'anton', 'rita']
+    write_list:  ['nas', 'anton']
+  - name: backup
+    path: /storage/backup
+    valid_users: ['nas', 'anton', 'rita']
+    write_list:  ['nas', 'anton']
+  - name: cloud
+    path: /storage/cloud
+    valid_users: ['nas', 'anton', 'rita']
+    write_list:  ['nas', 'anton']
+  - name: library
+    path: /storage/library
+    valid_users: ['nas', 'anton', 'rita']
+    write_list:  ['nas', 'anton', 'rita']
+  - name: media
+    path: /storage/media
+    valid_users: ['nas', 'anton', 'rita']
+    write_list:  ['nas', 'anton', 'rita']
+  - name: photos
+    path: /storage/photos
+    valid_users: ['nas', 'anton', 'rita']
+    write_list:  ['nas', 'anton']
+  - name: scripts
+    path: /storage/scripts
+    valid_users: ['nas', 'anton', 'rita']
+    write_list:  ['nas', 'anton']
+  - name: various
+    path: /storage/various
+    valid_users: ['nas', 'anton']
+    write_list:  ['nas', 'anton']
+  - name: work
+    path: /storage/work
+    valid_users: ['nas', 'anton', 'rita']
+    write_list:  ['nas', 'anton']

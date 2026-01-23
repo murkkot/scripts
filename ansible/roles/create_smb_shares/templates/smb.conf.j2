@@ -1,0 +1,21 @@
+[global]
+   security = user
+   workgroup = WORKGROUP
+{% if samba_access_based_share_enum | default(false) %}
+   access based share enum = yes
+{% endif %}
+{% for s in samba_shares %}
+[{{ s.name }}]
+   path = {{ s.path }}
+   browseable = yes
+   read only = yes
+{% set vu = s.valid_users | default([]) %}
+{% if vu | length > 0 %}
+   valid users = {{ vu | join(' ') }}
+{% endif %}
+{% set wl = s.write_list | default([]) %}
+{% if wl | length > 0 %}
+   write list = {{ wl | join(' ') }}
+{% endif %}
+
+{% endfor %}

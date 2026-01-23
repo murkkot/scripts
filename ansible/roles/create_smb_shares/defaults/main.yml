@@ -1,0 +1,5 @@
+samba_config_path: /etc/samba/smb.conf
+samba_services:
+  - smbd
+samba_access_based_share_enum: true
+samba_shares: []

@@ -1,0 +1,29 @@
+---
+- name: Add SMB shares
+  hosts: proxmox
+  vars:
+    groups_to_create:
+      - smbusers
+  vars_files:
+    - vars/.proxmox_smb_secrets
+    - vars/proxmox_samba_shares.yml
+  pre_tasks:
+    - name: Build list of share paths
+      ansible.builtin.set_fact:
+        samba_share_paths: "{{ samba_shares | selectattr('path', 'defined') | map(attribute='path') | list }}"
+  roles:
+    - deploy_samba
+    - deploy_wsdd2
+    - create_linux_groups
+    - create_linux_users
+    - add_users_to_groups
+    - role: set_dir_ownership
+      vars:
+        dir_owner: root
+        dir_group: smbusers
+        dirs: "{{ samba_share_paths }}"
+        dirs_setgid_enabled: true
+    - role: set_samba_user_password
+      vars:
+        users: "{{ users_to_create }}"
+    - create_smb_shares

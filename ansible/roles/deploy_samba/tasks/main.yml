@@ -1,0 +1,12 @@
+- name: Install Samba
+  ansible.builtin.apt:
+    name:
+      - samba
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+- name: Ensure smbd service is enabled and started
+  ansible.builtin.service:
+    name: smbd
+    state: started
+    enabled: true
