@@ -24,7 +24,7 @@ fi
 printf 'Stopping docker container\n'
 docker stop vaultwarden > /dev/null
 printf 'Creating archive %s\n' "$backup_path/$archive_name"
-tar -czf "$backup_path"/"$archive_name" -C /mnt/hdd/docker/vaultwarden data
+tar -czf "$backup_path"/"$archive_name" -C /home/nas/docker/vaultwarden data
 printf 'Starting docker container\n'
 docker start vaultwarden > /dev/null
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-rm /mnt/hdd/cloud/tmp/clips/t.empty
-mv -f /mnt/hdd/cloud/tmp/clips/* /mnt/hdd/various/vids/
-touch /mnt/hdd/cloud/tmp/clips/t.empty
-rm /mnt/hdd/cloud/tmp/photos/t.empty
-mv -f /mnt/hdd/cloud/tmp/photos/* /mnt/hdd/various/photos/
-touch /mnt/hdd/cloud/tmp/photos/t.empty
+rm /mnt/cloud/tmp/clips/t.empty
+mv -f /mnt/cloud/tmp/clips/* /mnt/various/vids/
+touch /mnt/cloud/tmp/clips/t.empty
+rm /mnt/cloud/tmp/photos/t.empty
+mv -f /mnt/cloud/tmp/photos/* /mnt/various/photos/
+touch /mnt/cloud/tmp/photos/t.empty

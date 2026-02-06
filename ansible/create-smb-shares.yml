@@ -1,0 +1,15 @@
+---
+- name: Add SMB shares
+  hosts: proxmox
+  vars:
+    groups:
+      - smbusers
+  vars_files:
+    - vars/.proxmox-smb-secrets
+  roles:
+    - deploy_samba
+    - create_linux_groups
+    - create_linux_users
+    - add_users_to_groups
+    - set_samba_user_password
+    - create_smb_shares
