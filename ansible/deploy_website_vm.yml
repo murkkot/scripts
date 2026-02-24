@@ -1,0 +1,22 @@
+---
+- name: Deploy website VM
+  hosts: website
+  become: true
+  vars:
+    server_user: "lpa"
+    samba_shares:
+      - name: home
+        path: /home/{{ server_user }}
+        valid_users: ["{{ server_user }}"]
+        write_list:  ["{{ server_user }}"]
+  vars_files:
+    - vars/.website_smb_secrets
+  roles:
+    - update_upgrade
+    - deploy_qemu_agent
+    - deploy_docker
+    - deploy_samba
+    - role: set_samba_user_password
+      vars:
+        users: "{{ users_to_create }}"
+    - create_smb_shares
