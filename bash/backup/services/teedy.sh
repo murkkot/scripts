@@ -15,7 +15,7 @@ fi
 # backup data
 cp -r "$SOURCE_DIR/docs/data/lucene" "$SOURCE_DIR/docs/data/storage" "$TMP_DIR/teedy/"
 if [ $? -ne 0 ]; then
-  echo "Data backup dump failed" >&2
+  echo "Data backup failed" >&2
   exit 1
 fi
 # compress data
