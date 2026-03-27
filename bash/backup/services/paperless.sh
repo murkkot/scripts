@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 
-TMP_DIR=$1
+TMP_DIR=$(docker inspect paperless-webserver | \
+ jq -r '.[].Mounts[] | select(.Destination | contains("export")) | .Source')
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 
-#docker exec paperless-webserver document_exporter --delete --zip --no-progress-bar ../export >/dev/null
-docker exec paperless-webserver document_exporter --delete --zip \
-  --no-progress-bar ../export/$TIMESTAMP.zip >/dev/null
+docker exec paperless-webserver document_exporter \
+  --delete \
+  --zip \
+  --zip-name "$TIMESTAMP" \
+  --no-progress-bar \
+  ../export >/dev/null
+
 if [ $? -ne 0 ]; then
   echo "Backup creation failed" >&2
   exit 1
