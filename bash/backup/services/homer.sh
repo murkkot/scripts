@@ -5,6 +5,6 @@ SOURCE_DIR=$(docker inspect homer | \
  jq -r '.[].Config.Labels["com.docker.compose.project.working_dir"]')
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 
-tar -czf ${TMP_DIR}/$TIMESTAMP.tar.gz "$SOURCE_DIR" >/dev/null 2>&1
+tar -czf ${TMP_DIR}/$TIMESTAMP.tar.gz -C "$SOURCE_DIR" . >/dev/null 2>&1
 
-echo "$TMP_DIR/$TIMESTAMP.zip"
+echo "$TMP_DIR/$TIMESTAMP.tar.gz"
