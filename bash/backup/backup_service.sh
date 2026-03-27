@@ -65,6 +65,8 @@ if [ $? -ne 0 ]; then
   echo "$SERVICE_BACKUP_SCRIPT_NAME failed" >&2
   notify_pushover "$0 ERROR: $SERVICE_BACKUP_SCRIPT_NAME failed"
   exit 1
+else
+  echo "Service backup successful"
 fi
 
 if [ ! -f "$archive_name" ]; then
@@ -87,11 +89,6 @@ if [ $? -ne 0 ]; then
   echo "$ROTATE_BACKUPS_SCRIPT_NAME failed" >&2
   notify_pushover "$0 ERROR: $ROTATE_BACKUPS_SCRIPT_NAME failed"
   exit 1
+else
+  echo "Backup rotation successfull"
 fi
-
-echo -e "\n============ Backup job successful ============"
-
-
- 
-
-
