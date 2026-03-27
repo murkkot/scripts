@@ -74,7 +74,7 @@ if [ $exit_code -ne 0 ]; then
     echo "$current_date Backup failed" >&2
     exit $exit_code
 else
-    echo -e "$current_date Backup successful\n$SOURCE_FILE copied to ${DEST}/${filename}"
+    echo -e "$SOURCE_FILE copied to ${DEST}/${filename}"
 fi
 
 # PURGING

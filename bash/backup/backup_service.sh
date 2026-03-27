@@ -12,7 +12,7 @@ notify_pushover () {
     	curl -s --form-string "token=$PUSHOVER_TOKEN" \
         --form-string "user=$PUSHOVER_USER_KEY" \
         --form-string "message=$1" \
-        https://api.pushover.net/1/messages.json
+        https://api.pushover.net/1/messages.json > /dev/null
         printf '\n'
 }
 
@@ -22,7 +22,7 @@ TMP_DIR=/tmp
 SERVICE_BACKUP_SCRIPT_NAME="./services/$SERVICE_NAME.sh"
 ROTATE_BACKUPS_SCRIPT_NAME="./rotate_backups.sh"
 
-echo "echo -e "\n============ $(date ++"%Y-%m-%d %H:%M:%S") Backup job ============""
+echo -e "\n============ $(date +"%Y-%m-%d %H:%M:%S") Backup job ============"
 
 # INPUT VALIDATION
 
@@ -89,7 +89,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-"echo -e "\n============ Backup job successful ============""
+echo -e "\n============ Backup job successful ============"
 
 
  
