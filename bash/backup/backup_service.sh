@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 
 show_help () {
-    printf 'USAGE: %s BACKUP_DESTINATION SERVICE_NAME\n
+    printf 'USAGE: %s BACKUP_DESTINATION SERVICE_NAME [DAILY] [WEEKLY] [MONTHLY] [EARLY]\n
     Arguments:
         BACKUP_DESTINATION      Directory to backup to
         SERVICE_NAME            Service name to call service backup script\n
-    Example: %s /mnt/backup paperless\n' "$0" "$0"
+        DAILY       Number of daily backups to keep (default: 1, 0 = unlimited)
+        WEEKLY      Number of weekly backups to keep (default: 1, 0 = unlimited)
+        MONTHLY     Number of monthly backups to keep (default: 1, 0 = unlimited)
+        EARLY       Number of yearly backups to keep (default: 1, 0 = unlimited)
+    Example: %s /mnt/backup paperless 3 4 1 1\n' "$0" "$0"
 }
 
 notify_pushover () {
@@ -18,6 +22,10 @@ notify_pushover () {
 
 BACKUP_DESTINATION=$1
 SERVICE_NAME=$2
+DAILY=${3:-1}
+WEEKLY=${4:-1}
+MONTHLY=${5:-1}
+YEARLY=${6:-1}
 TMP_DIR=/tmp
 SERVICE_BACKUP_SCRIPT_NAME="./services/$SERVICE_NAME.sh"
 ROTATE_BACKUPS_SCRIPT_NAME="./rotate_backups.sh"
@@ -58,6 +66,17 @@ if [ ! -x "$SERVICE_BACKUP_SCRIPT_NAME" ]; then
   exit 1
 fi
 
+if [ $# -ge 2 ]; then
+  shift 2
+  for arg in "$@"; do
+    if [[ ! "$arg" =~ ^[0-9]+$ ]]; then
+      echo "Error: '$arg' is not a valid number" >&2
+      notify_pushover "$0 ERROR: Backup rotation parameter is not a number"
+      exit 1
+    fi
+  done
+fi
+
 # Call backup function
 archive_name=$("$SERVICE_BACKUP_SCRIPT_NAME" "$TMP_DIR")
 
@@ -83,7 +102,7 @@ if [ ! -f "$ROTATE_BACKUPS_SCRIPT_NAME" ] || [ ! -x "$ROTATE_BACKUPS_SCRIPT_NAME
 fi
 
 # DAILY=1 WEEKLY=1 MONTHLY=1 YEARLY=1
-$ROTATE_BACKUPS_SCRIPT_NAME "$archive_name" "$BACKUP_DESTINATION/$SERVICE_NAME" 1 1 1 1
+$ROTATE_BACKUPS_SCRIPT_NAME "$archive_name" "$BACKUP_DESTINATION/$SERVICE_NAME" "$DAILY" "$WEEKLY" "$MONTHLY" "$YEARLY"
 
 if [ $? -ne 0 ]; then
   echo "$ROTATE_BACKUPS_SCRIPT_NAME failed" >&2
