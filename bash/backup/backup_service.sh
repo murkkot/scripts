@@ -20,6 +20,9 @@ notify_pushover () {
         printf '\n'
 }
 
+# invoke pushover api key and user key for cron
+source $HOME/.bashrc
+
 BACKUP_DESTINATION=$1
 SERVICE_NAME=$2
 DAILY=${3:-1}
