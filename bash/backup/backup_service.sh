@@ -27,8 +27,9 @@ WEEKLY=${4:-1}
 MONTHLY=${5:-1}
 YEARLY=${6:-1}
 TMP_DIR=/tmp
-SERVICE_BACKUP_SCRIPT_NAME="./services/$SERVICE_NAME.sh"
-ROTATE_BACKUPS_SCRIPT_NAME="./rotate_backups.sh"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SERVICE_BACKUP_SCRIPT_NAME="$SCRIPT_DIR/services/$SERVICE_NAME.sh"
+ROTATE_BACKUPS_SCRIPT_NAME="$SCRIPT_DIR/rotate_backups.sh"
 
 echo -e "\n============ $(date +"%Y-%m-%d %H:%M:%S") Backup job ============"
 
