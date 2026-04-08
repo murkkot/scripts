@@ -21,7 +21,9 @@ notify_pushover () {
 }
 
 # invoke pushover api key and user key for cron
-source $HOME/.bashrc
+set -a
+source $HOME/.pushover
+set +a
 
 BACKUP_DESTINATION=$1
 SERVICE_NAME=$2
@@ -66,6 +68,8 @@ fi
 
 if [ ! -x "$SERVICE_BACKUP_SCRIPT_NAME" ]; then
   echo "$SERVICE_BACKUP_SCRIPT_NAME is not executable or doesn't exist" >&2
+  echo "HOME: $HOME" >&2
+  echo "PUSHOVER_TOKEN: $PUSHOVER_TOKEN" >&2
   notify_pushover "$0 ERROR: $SERVICE_BACKUP_SCRIPT_NAME is not executable or doesn't exist"
   exit 1
 fi
